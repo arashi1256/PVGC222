@@ -31,9 +31,3 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => io.emit('chat message', msg));
-});
-
-server.listen(3000, () => console.log('Server running on port 3000'));
