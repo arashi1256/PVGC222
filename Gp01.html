@@ -278,7 +278,8 @@
             }
         }
 
-        socket.on('chat message', (data) => {
+        // မက်ဆေ့ချ်တစ်ခုချင်းစီကို Screen ပေါ်တင်ပေးသော Function
+        function appendMessage(data) {
             const messages = document.getElementById('messages');
             const isMyMsg = data.name === finalName;
 
@@ -303,6 +304,20 @@
             row.innerHTML = html;
             messages.appendChild(row);
             messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Server မှ ယခင်စာဟောင်းများကို လက်ခံရယူခြင်း
+        socket.on('load history', (history) => {
+            const messages = document.getElementById('messages');
+            messages.innerHTML = '';
+            history.forEach((data) => {
+                appendMessage(data);
+            });
+        });
+
+        // မက်ဆေ့ချ်အသစ် ရောက်လာသည့်အခါ
+        socket.on('chat message', (data) => {
+            appendMessage(data);
         });
     </script>
 </body>
