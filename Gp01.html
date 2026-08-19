@@ -52,7 +52,7 @@
             <h3>Family Guys Chat</h3>
             <div id="step-1">
                 <p style="font-size: 13px; color: #555; margin-bottom: 10px;">အကောင့်ဝင်ရန် Username နှင့် Password ထည့်ပါ။</p>
-                <input type="text" id="username" placeholder="Username (ဥပမာ - user_alpha)">
+                <input type="text" id="username" placeholder="Username (ဥပမာ - user_xxxx)">
                 <input type="password" id="password" placeholder="Password">
                 <div id="error-text" class="error-msg">Username သို့မဟုတ် Password မှားယွင်းနေပါသည်။</div>
                 <button onclick="checkLogin()">နောက်တစ်ဆင့်သို့</button>
@@ -70,7 +70,7 @@
 
     <!-- Chat Interface -->
     <div id="chat-container">
-        <header>Family Guys Group</header>
+        <header>Family Guys Private Group</header>
         <div id="messages"></div>
 
         <div class="chat-footer">
@@ -135,7 +135,7 @@
             const fileInput = document.getElementById('profilePicInput');
 
             if(!name) {
-                alert("ကျေးဇူးပြု၍ ပြသမည့်နာမည် ထည့်ပါ။");
+                alert("သင့်၏ နာမည်ထည့်ပါ။");
                 return;
             }
 
