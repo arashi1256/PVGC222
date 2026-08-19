@@ -12,6 +12,9 @@ const upload = multer({ dest: 'uploads/' });
 app.use(express.static(__dirname));
 app.use('/uploads', express.static('uploads'));
 
+// စာများနှင့် ဖိုင်များကို ခတ္တသိမ်းဆည်းထားမည့် Array
+let messageHistory = [];
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Gp01.html'));
 });
@@ -24,7 +27,19 @@ app.post('/upload', upload.single('file'), (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => io.emit('chat message', msg));
+    // User အသစ်ဝင်လာလျှင် သို့မဟုတ် App ကို ပြန်ဖွင့်လျှင် ယခင်စာဟောင်းများကို ပို့ပေးမည်
+    socket.emit('load history', messageHistory);
+
+    socket.on('chat message', (msg) => {
+        // မက်ဆေ့ချ်အသစ်ရောက်တိုင်း History ထဲသို့ ထည့်မည် (အများဆုံး အစောင်ရေ ၁၀၀ ထိ သိမ်းမည်)
+        messageHistory.push(msg);
+        if (messageHistory.length > 100) {
+            messageHistory.shift();
+        }
+
+        // ချိတ်ဆက်ထားသူအားလုံးထံသို့ ပို့မည်
+        io.emit('chat message', msg);
+    });
 });
 
 const PORT = process.env.PORT || 3000;
